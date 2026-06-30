@@ -1,0 +1,169 @@
+/* scrabble.css - styles for the board, bonus squares, rack, tiles and
+ * scoreboard. Adam Ohanian (adam_ohanian@student.uml.edu), COMP 4610 HW5. */
+
+:root {
+  --square-size: 64px;     /* width & height of one board square / tile */
+  --tile-size: 60px;
+  --board-bg: #d9c9a3;     /* tan board background          */
+  --normal-sq: #e9dcb8;    /* plain square                  */
+  --dl-sq: #a9d6e5;        /* Double Letter  - light blue   */
+  --tl-sq: #2a6f97;        /* Triple Letter  - dark blue    */
+  --dw-sq: #f4a9b8;        /* Double Word    - pink         */
+  --tw-sq: #e63946;        /* Triple Word    - red          */
+}
+
+* { box-sizing: border-box; }
+
+body {
+  font-family: "Segoe UI", Arial, sans-serif;
+  background: #2f4858;
+  color: #f1faee;
+  margin: 0;
+  padding: 24px;
+}
+
+h1 { margin: 0 0 4px; font-size: 1.6rem; }
+.subtitle { margin: 0 0 20px; color: #a8c0cf; font-size: 0.9rem; }
+
+a { color: #a9d6e5; }
+
+/* ----------------------------- Board ------------------------------ */
+
+#board {
+  display: inline-block;
+  background: var(--board-bg);
+  padding: 8px;
+  border-radius: 6px;
+  box-shadow: 0 6px 18px rgba(0,0,0,0.4);
+  margin-bottom: 24px;
+  overflow: auto;
+  max-width: 100%;
+}
+
+.board-row { display: flex; }
+
+.square {
+  width: var(--square-size);
+  height: var(--square-size);
+  border: 1px solid #b6a578;
+  background: var(--normal-sq);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+  font-size: 0.55rem;
+  font-weight: bold;
+  line-height: 1.05;
+  color: #355;
+  user-select: none;
+  position: relative;
+  flex: 0 0 auto;
+}
+
+/* Premium-square colors + label text colors */
+.square.DL { background: var(--dl-sq); }
+.square.TL { background: var(--tl-sq); color: #fff; }
+.square.DW { background: var(--dw-sq); }
+.square.TW { background: var(--tw-sq); color: #fff; }
+.square.ST { background: var(--dw-sq); font-size: 1.4rem; color: #c1121f; }
+
+/* Highlight while a tile is dragged over a legal target */
+.square.drop-hover { outline: 3px solid #2a9d8f; outline-offset: -3px; }
+
+/* A square that already holds a (locked) tile */
+.square.occupied { padding: 0; }
+.square.occupied .bonus-label { display: none; }   /* hide the premium label */
+
+/* A locked tile fills its square completely so no bonus color/label peeks. */
+.square .tile.locked {
+  width: 100%;
+  height: 100%;
+  border-radius: 0;
+}
+
+/* --------------------------- Tile rack ---------------------------- */
+
+#rack {
+  background: url("../images/rack.png") no-repeat center / 100% 100%;
+  width: calc(var(--square-size) * 7 + 90px);
+  max-width: 100%;
+  min-height: 130px;
+  padding: 26px 40px 34px;
+  display: flex;
+  gap: 6px;
+  align-items: center;
+  border-radius: 8px;
+  margin-bottom: 20px;
+}
+
+.rack-slot {
+  width: var(--tile-size);
+  height: var(--tile-size);
+  flex: 0 0 auto;
+}
+
+/* ----------------------------- Tiles ------------------------------ */
+
+.tile {
+  width: var(--tile-size);
+  height: var(--tile-size);
+  border-radius: 5px;
+  box-shadow: 0 2px 4px rgba(0,0,0,0.4);
+  cursor: grab;
+  display: block;
+}
+
+.tile:active { cursor: grabbing; }
+
+/* A tile that has been locked onto the board */
+.tile.locked { cursor: default; box-shadow: none; border-radius: 3px; }
+
+/* jQuery UI gives the dragged helper this; keep it on top */
+.ui-draggable-dragging { z-index: 1000; }
+
+/* ------------------------ Scoreboard / UI ------------------------- */
+
+#scoreboard {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 28px;
+  align-items: baseline;
+  margin-bottom: 16px;
+  font-size: 1.05rem;
+}
+#scoreboard .label { color: #a8c0cf; font-size: 0.8rem; display: block; }
+#scoreboard .value { font-size: 1.5rem; font-weight: bold; }
+#current-word { letter-spacing: 2px; text-transform: uppercase; }
+
+#controls { margin-bottom: 14px; display: flex; gap: 10px; flex-wrap: wrap; }
+
+button {
+  font-size: 0.95rem;
+  padding: 9px 16px;
+  border: none;
+  border-radius: 6px;
+  background: #457b9d;
+  color: #fff;
+  cursor: pointer;
+}
+button:hover { background: #1d6fa5; }
+button.primary { background: #2a9d8f; }
+button.primary:hover { background: #21867a; }
+button.danger { background: #e76f51; }
+button.danger:hover { background: #d65a3c; }
+
+#message {
+  min-height: 1.4em;
+  font-weight: bold;
+  margin-bottom: 10px;
+}
+#message.ok { color: #8ce99a; }
+#message.err { color: #ffa8a8; }
+#message.info { color: #ffe066; }
+
+.legend { font-size: 0.8rem; color: #cdddE6; margin-top: 8px; }
+.legend span { display: inline-block; padding: 2px 7px; border-radius: 3px; margin-right: 8px; color: #243; }
+.legend .DL { background: var(--dl-sq); }
+.legend .TL { background: var(--tl-sq); color:#fff; }
+.legend .DW { background: var(--dw-sq); }
+.legend .TW { background: var(--tw-sq); color:#fff; }

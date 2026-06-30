@@ -1,0 +1,85 @@
+<!DOCTYPE html>
+<!-- index.html - the single-line Scrabble board (one row of 15 squares). - Adam Ohanian (adam_ohanian@student.uml.edu) -->
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Scrabble (Single Line) - COMP 4610 HW5</title>
+
+  <link rel="stylesheet"
+        href="https://code.jquery.com/ui/1.13.2/themes/base/jquery-ui.css">
+  <link rel="stylesheet" href="css/scrabble.css">
+</head>
+<body>
+  <h1>Scrabble - Single Line</h1>
+  <p class="subtitle">
+    COMP 4610 GUI I, HW5, Adam Ohanian.
+    Drag tiles onto the board to spell a word.
+  </p>
+
+  <div id="message"></div>
+
+  <!-- The one-line board is built by js/scrabble.js from BOARD_LAYOUT below. -->
+  <div id="board"></div>
+
+  <div id="scoreboard">
+    <div>
+      <span class="label">Current word</span>
+      <span class="value" id="current-word">(none)</span>
+    </div>
+    <div>
+      <span class="label">This word</span>
+      <span class="value" id="current-score">0</span>
+    </div>
+    <div>
+      <span class="label">Total score</span>
+      <span class="value" id="total-score">0</span>
+    </div>
+    <div>
+      <span class="label">Tiles left in bag</span>
+      <span class="value" id="tiles-left">0</span>
+    </div>
+  </div>
+
+  <div id="controls">
+    <button id="btn-submit" class="primary">Submit Word</button>
+    <button id="btn-reset">Reset Round</button>
+    <button id="btn-newgame" class="danger">New Game</button>
+  </div>
+
+  <!-- The rack tiles. Drag them onto the board above. -->
+  <div id="rack"></div>
+
+  <p class="legend">
+    Premium squares:
+    <span class="DL">Double Letter</span>
+    <span class="TL">Triple Letter</span>
+    <span class="DW">Double Word</span>
+    <span class="TW">Triple Word</span>
+    (the center &#9733; is a Double Word square)
+  </p>
+
+  <!-- Libraries -->
+  <script src="https://code.jquery.com/jquery-3.6.4.min.js"></script>
+  <script src="https://code.jquery.com/ui/1.13.2/jquery-ui.min.js"></script>
+
+  <!-- Game code -->
+  <script src="js/scrabble-tiles.js"></script>
+  <script src="js/dictionary.js"></script>
+  <script src="js/scrabble.js"></script>
+
+  <script>
+    // one row, 15 columns. I put all four premium types + the star in it.
+    var BOARD_LAYOUT = [
+      ["TW", "", "DL", "", "TL", "", "DW", "ST", "DW", "", "TL", "", "DL", "", "TW"]
+    ];
+
+    $(function () {
+      Scrabble.init({
+        layout: BOARD_LAYOUT,
+        dictionaryUrl: "data/words.txt"   // extra-credit word validation
+      });
+    });
+  </script>
+</body>
+</html>
