@@ -1,7 +1,7 @@
 # COMP 4610 GUI Programming I, HW5: Scrabble with Drag-and-Drop
 
 **Author:** Adam Ohanian
-**Contact:** adamohanian@gmail.com
+**Contact:** adam_ohanian@student.uml.edu
 
 A browser implementation of Scrabble using jQuery / jQuery UI drag-and-drop.
 The player drags letter tiles from a rack onto board squares (including bonus
@@ -16,20 +16,6 @@ premium-square multipliers into account.
 - `css/scrabble.css` styles everything (board, squares, rack, tiles, scoreboard).
 - The tile and rack graphics are under `images/`.
 
-## How to run
-
-Word validation uses `fetch()`, which browsers block under `file://`, so serve
-the folder over HTTP:
-
-```bash
-cd Scrabble
-python3 -m http.server 8000
-```
-
-Then open http://localhost:8000/index.html
-
-> The game itself works when opened directly as a file; only the dictionary
-> word-validation feature requires the local web server.
 
 ## How to play
 
